@@ -1,0 +1,37 @@
+jobs:
+  - name: monorepo_sample_runCI
+    type: runCI
+    steps:
+      - IN: dockerhub
+      - OUT: api-img
+      - OUT: www-img
+    on_success:
+      - script: echo 'on success !!!!!'
+    on_failure:
+      - script: echo 'Failed job .... :('
+
+  - name: www-man
+    type: manifest
+    steps:
+      - IN: www-options
+      - IN: www-img
+        force: true
+
+  - name: www-deploy
+    type: deploy
+    steps:
+      - IN: www-man
+      - IN: ddc-cluster
+
+  - name: api-man
+    type: manifest
+    steps:
+      - IN: api-options
+      - IN: api-img
+        force: true
+
+  - name: api-deploy
+    type: deploy
+    steps:
+      - IN: api-man
+      - IN: ddc-cluster

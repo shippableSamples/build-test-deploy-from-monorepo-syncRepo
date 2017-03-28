@@ -1,0 +1,36 @@
+resources:
+  - name: api-img
+    type: image
+    integration: dockerhub
+    pointer:
+      sourceName: "shippableSamples/api"
+    seed:
+      versionName: master.3
+
+  - name: www-img
+    type: image
+    integration: dockerhub
+    pointer:
+      sourceName: "shippableSamples/www"
+    seed:
+      versionName: master.3
+
+  - name: ddc-cluster
+    type: cluster
+    integration: ddc-cluster
+
+  - name: www-options                              #required
+    type: dockerOptions                         #required
+    version:
+      portMappings:                             #optional
+        - "51000:51000"
+
+  - name: api-options                              #required
+    type: dockerOptions                         #required
+    version:
+      portMappings:                             #optional
+        - "50000:50000"
+
+  - name: dockerhub
+    type: integration
+    integration: "dockerhub"
